@@ -1,8 +1,15 @@
-use std::slice::SplitMut;
+fn main() {
+    let ip1 = IpAddr::V4(127, 1, 1, 1);
+    let ip2 = IpAddr::V6("2001:0DB8:0000:0000:0008:0800:200C:417A".to_string());
+    println!("ipv4: {:?}", ip1);
+    println!("ipv6: {:?}", ip2);
 
-enum IpAddrKind {
-    V4(String),
-    V6(String)
+    let msg = Messaage::Write(String::from("hello"));
+    let msg2 = Messaage::Move { x: 32, y: 23 };
+    msg.call();
+    msg2.use1();
+
+    test_pattern();
 }
 
 #[derive(Debug)]
@@ -12,6 +19,7 @@ enum IpAddr{
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum Messaage{
     Quit,
     Move {x: i32, y: i32},
@@ -19,58 +27,25 @@ enum Messaage{
     ChangeColor(i32, i32, i32)
 }
 
+// enum behavior
 impl Messaage {
     fn call(&self) {
-        println!("xxx")
+        println!("enum value: {:?}", self)
+    }
+    fn use1(&self) -> &str {
+        match self {
+            Messaage::Quit => "1",
+            Messaage::Move{x, y } => {
+                println!("x: {:?}, y: {:?}", x, y);
+                "2"
+            },
+            Messaage::Write(..) => "3",
+            Messaage::ChangeColor(..) => "4"
+        }
     }
 }
-fn plus_one(data: Option<i32>) -> Option<i32> {
-    match data {
-        Some(i) => Some(i + 1),
-        None => None
-    }
-}
 
-fn main() {
-    let ip1 = IpAddr::V4(127, 1, 1, 1);
-    let ip2 = IpAddr::V4(183, 1, 1, 1);
-    println!("{:?}", ip1);
-
-    let msg = Messaage::Write(String::from("hhelo"));
-    let x = 32;
-    let y = 23;
-    let msg2 = Messaage::Move { x, y };
-    println!("{:?}", msg2);
-    msg.call();
-
-    test_option();
-
-    test_pattern();
-
-    test_if_let();
-}
-
-// if let is a syntax sugar for match
-fn test_if_let() {
-    let config_max = Some(89u8);
-    if let Some(max) = config_max {
-        println!("The maximum is configured to {}", max);
-    }
-
-}
-
-fn test_option() {
-    let some_number = Some(5);
-    let some_string = Some("a string");
-    let str = "another string";
-
-    let absent_number: Option<i32> = None;
-
-    let data = some_number.unwrap();
-
-    println!("{}", data);
-}
-
+#[allow(dead_code)]
 enum Coin{
     Penny,
     Nickel,
@@ -79,6 +54,7 @@ enum Coin{
 }
 
 #[derive(Debug)]
+#[allow(dead_code)]
 enum UsSate {
     Alabama,
     Alaska
@@ -86,9 +62,7 @@ enum UsSate {
 
 fn test_pattern() {
     let value = value_in_cents(Coin::Quarter(UsSate::Alaska));
-    println!("value: {}", value);
-
-    let i = plus_one(Some(5));
+    println!("quarter value: {}", value);
 
     let i = 5;
     match i {
@@ -96,6 +70,12 @@ fn test_pattern() {
         5 => println!("5"),
         // oth => println!("other: {}", oth),
         _ => println!("reroll"),
+    }
+
+    // if let is a syntax sugar for match
+    let config_max = Some(89u8);
+    if let Some(max) = config_max {
+        println!("The maximum is configured to {}", max);
     }
 }
 
