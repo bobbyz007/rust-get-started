@@ -1,7 +1,18 @@
 use std::ops::Add;
 
+// trait作为接口
+pub fn trait_interface() {
+    println!("struct add: {:?}", Point { x: 1, y: 0 } + Point { x: 2, y: 3 });
+
+    // trait inheritance
+    let my_paginate = MyPaginate { page: 1 };
+    my_paginate.set_page(1);
+    my_paginate.set_perpage(100);
+    my_paginate.set_skip_page(12);
+}
+
 #[derive(Debug)]
-pub struct Point {
+struct Point {
     pub x: i32,
     pub y: i32,
 }
@@ -19,24 +30,25 @@ impl Add for Point {
 }
 
 /// trait inheritance
-pub trait Page {
+trait Page {
     fn set_page(&self, p: i32) {
         println!("page default: {:?}", p)
     }
 }
-pub trait PerPage {
+trait PerPage {
     fn set_perpage(&self, num: i32) {
         println!("perpage default: {:?}", num)
     }
 }
 
-pub trait Paginate :Page + PerPage {
+trait Paginate :Page + PerPage {
     fn set_skip_page(&self, num: i32) {
         println!("skip page: {:?}", num)
     }
 }
 
-pub struct MyPaginate {
+#[allow(dead_code)]
+struct MyPaginate {
     pub page: i32
 }
 // rustc complains if below 2 statements commented

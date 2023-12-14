@@ -3,6 +3,7 @@ use std::thread;
 #[derive(Copy, Clone)]
 struct MyStruct;
 
+// label: sized,copy,clone, send, sync
 pub fn send_sync_safe() {
     let mut x = vec![1, 2, 3, 4];
     // 默认闭包中的x是借用, 但move阻止了数据竞争， x实现了Send和Sync才可以move传递所有权。

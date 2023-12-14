@@ -1,3 +1,4 @@
+use crate::enums::enums;
 use crate::patterns::patterns;
 use crate::structs::structs;
 use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, manual_type_conversion};
@@ -5,10 +6,14 @@ use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, 
 mod structs;
 mod patterns;
 mod type_conversion;
+mod enums;
 
 fn main() {
     println!("-----------------------------structs----------------------------------");
     structs();
+
+    println!("------------------------------enums-----------------------------------");
+    enums();
 
     println!("---------------------------match patterns-----------------------------");
     patterns();

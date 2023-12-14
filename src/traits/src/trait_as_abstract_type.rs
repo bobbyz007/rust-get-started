@@ -1,9 +1,24 @@
 use std::fmt::Debug;
 
-#[derive(Debug)]
-pub struct Foo;
+pub fn trait_abstract_types() {
+    // trait object
+    let foo = Foo;
+    static_dispatch(&foo);
+    dynamic_dispatch(&foo);
 
-pub trait Bar {
+    // impl trait
+    let pig = Pig;
+    assert_eq!(fly_static(pig), false);
+    let duck = Duck;
+    assert_eq!(fly_static(duck), true);
+    can_fly(Pig);
+    can_fly(Duck);
+}
+
+#[derive(Debug)]
+struct Foo;
+
+trait Bar {
     fn baz(&self);
 }
 impl Bar for Foo {
@@ -12,22 +27,22 @@ impl Bar for Foo {
     }
 }
 
-pub fn static_dispatch<T>(t: &T) where T: Bar {
+fn static_dispatch<T>(t: &T) where T: Bar {
     t.baz();
 }
 // trait object, fat pointer and allocated in heap
-pub fn dynamic_dispatch(t: &dyn Bar) {
+fn dynamic_dispatch(t: &dyn Bar) {
     t.baz();
 }
 
 /// static dispatch: impl trait
-pub trait Fly {
+trait Fly {
     fn fly(&self) -> bool;
 }
 #[derive(Debug)]
-pub struct Duck;
+struct Duck;
 #[derive(Debug)]
-pub struct Pig;
+struct Pig;
 
 impl Fly for Duck {
     fn fly(&self) -> bool {
@@ -41,11 +56,11 @@ impl Fly for Pig {
 }
 
 // impl used as parameter
-pub fn fly_static(s: impl Fly + Debug) -> bool {
+fn fly_static(s: impl Fly + Debug) -> bool {
     s.fly()
 }
 // impl used as return type
-pub fn can_fly(s: impl Fly + Debug) -> impl Fly {
+fn can_fly(s: impl Fly + Debug) -> impl Fly {
     if s.fly() {
         println!("{:?} can fly", s)
     } else {

@@ -5,7 +5,7 @@ mod align;
 mod pointer;
 
 fn main() {
-    println!("-----------------------------alignment----------------------------------");
+    println!("-------------------------------alignment------------------------------------");
     mem_size();
     mem_size_composite();
 
