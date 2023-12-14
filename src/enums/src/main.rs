@@ -4,8 +4,8 @@ fn main() {
     println!("ipv4: {:?}", ip1);
     println!("ipv6: {:?}", ip2);
 
-    let msg = Messaage::Write(String::from("hello"));
-    let msg2 = Messaage::Move { x: 32, y: 23 };
+    let msg = Message::Write(String::from("hello"));
+    let msg2 = Message::Move { x: 32, y: 23 };
     msg.call();
     msg2.use1();
 
@@ -20,7 +20,7 @@ enum IpAddr{
 
 #[derive(Debug)]
 #[allow(dead_code)]
-enum Messaage{
+enum Message {
     Quit,
     Move {x: i32, y: i32},
     Write(String),
@@ -28,19 +28,19 @@ enum Messaage{
 }
 
 // enum behavior
-impl Messaage {
+impl Message {
     fn call(&self) {
         println!("enum value: {:?}", self)
     }
     fn use1(&self) -> &str {
         match self {
-            Messaage::Quit => "1",
-            Messaage::Move{x, y } => {
+            Message::Quit => "1",
+            Message::Move{x, y } => {
                 println!("x: {:?}, y: {:?}", x, y);
                 "2"
             },
-            Messaage::Write(..) => "3",
-            Messaage::ChangeColor(..) => "4"
+            Message::Write(..) => "3",
+            Message::ChangeColor(..) => "4"
         }
     }
 }
