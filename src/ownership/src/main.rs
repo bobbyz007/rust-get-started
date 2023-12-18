@@ -1,12 +1,14 @@
 use crate::bind_scope::{brace_scope, closure_scope, func_scope, let_scope, loop_scope, match_scope};
 use crate::copy_semantic::{copy_semantic, copy_semantic_auto, copy_semantic_borrow, is_copy_semantic};
-use crate::lifetime::{lifetime_bound, lifetime_func, lifetime_omit_rules, lifetime_struct, lifetime_trait_object, return_str};
+use crate::lifetime::{lifetime_bound, lifetime_func, lifetime_omit_rules, lifetime_struct, lifetime_trait_object, lifetime_trait_object_explicit, return_str};
 use crate::reference_borrow::borrow;
+use crate::subtype_variance::{lifetime_covariant, lifetime_invariant};
 
 mod copy_semantic;
 mod bind_scope;
 mod reference_borrow;
 mod lifetime;
+mod subtype_variance;
 
 fn main() {
     println!("-----------------------------copy semantic----------------------------------");
@@ -33,18 +35,12 @@ fn main() {
     lifetime_omit_rules();
     lifetime_bound();
     lifetime_trait_object();
+    lifetime_trait_object_explicit(&[2, 3]);
+    lifetime_covariant();
+    lifetime_invariant();
 
-    let t0 = 3;
-    let t = &t0;
-    {
-        let s0 = 2;
-        let s = &s0;
-        fff(s, t);
-    }
-    println!("{}", t);
+
 }
 
-fn fff<'a, 'b>(s: &'a i32, t: &'b i32) where 'a: 'b {
-    println!("{} {}", s, t);
-}
+
 

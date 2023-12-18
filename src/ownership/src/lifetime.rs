@@ -141,16 +141,31 @@ fn print_ref<T>(t: &T) where T: Debug {
 }
 
 /// trait对象生命周期
-trait TT {}
+trait T1 {}
+#[allow(dead_code)]
 struct Bar<'a> {
     x: &'a i32,
 }
-impl<'a> TT for Bar<'a> {}
+impl<'a> T1 for Bar<'a> {}
+#[allow(unused_variables)]
 pub fn lifetime_trait_object() {
     let num = 5;
     let bar = Box::new(Bar { x: &num });
-    // trait对象的生命周期就是'a
-    let obj = bar as Box<dyn TT>;
+    // 可以自动推导trait对象的生命周期就是'a，因为实现类型中有只有唯一的生命周期'a
+    let obj = bar as Box<dyn T1>;
+}
+
+// 生命周期也是类型的一部分
+pub trait T2 {}
+#[allow(dead_code)]
+struct S2<'a> {
+    s: &'a [u32],
+}
+impl<'a> T2 for S2<'a> {
+}
+// trait对象默认的生命周期是'static, 此时显式指定trait对象的声明周期是'a, 不然导致 'a outlives 'static
+pub fn lifetime_trait_object_explicit<'a>(s: &'a [u32]) -> Box<dyn T2 + 'a> {
+    Box::new(S2 { s })
 }
 
 
