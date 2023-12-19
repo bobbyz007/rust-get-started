@@ -1,3 +1,4 @@
+use crate::closure::{closure_fn, closure_fnmut, closure_fnonce, closure_higher_ranked_lifetime, closure_move, closure_return, closure_vector};
 use crate::enums::enums;
 use crate::patterns::patterns;
 use crate::structs::structs;
@@ -7,6 +8,7 @@ mod structs;
 mod patterns;
 mod type_conversion;
 mod enums;
+mod closure;
 
 fn main() {
     println!("-----------------------------structs----------------------------------");
@@ -24,4 +26,13 @@ fn main() {
     manual_type_conversion();
     as_op();
     from_into();
+
+    println!("-------------------------------closure--------------------------------");
+    closure_fn();
+    closure_fnmut();
+    closure_fnonce();
+    closure_move();
+    let _ = closure_return(1);
+    closure_vector();
+    closure_higher_ranked_lifetime();
 }
