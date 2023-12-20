@@ -5,6 +5,7 @@ mod teacher;
 // 需要在主模块中声明student这个子模块，从而才能构建出模块树，不然编译运行不通过
 mod student;
 
+// modules 是当前crate的名称
 use modules::eat_at_reataurant;
 
 fn main() {
