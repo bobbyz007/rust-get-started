@@ -72,6 +72,7 @@ pub fn patterns() {
         Action::ChangeColor(r, g, b) => println!("change color : {}, {}, {}", r, g, b),
     }
 
+    // match 匹配array数组 或 切片
     let numbers = (2, 4, 8, 16, 32);
     match  numbers {
         (x, .., z) => println!("some number: {}, {}", x, z),
