@@ -71,8 +71,8 @@ pub fn err_handled_library() {
         Err(e) => {
             eprintln!("Oh noes, we don't know which era we're in! :(");
             match e {
-                MyCustomError::HttpError => eprintln!("Request Error: {}", e),
-                MyCustomError::ParseError => eprintln!("Parse Error: {}", e),
+                MyCustomError::HttpError(e) => eprintln!("Custom Request Error: {}", e),
+                MyCustomError::ParseError(e) => eprintln!("Custom Parse Error: {}", e),
             }
         },
     }
@@ -81,27 +81,27 @@ pub fn err_handled_library() {
 // 定制错误要实现Error trait， 必须先实现Debug和Display，因为Error继承它们。
 #[derive(Debug)]
 pub enum MyCustomError {
-    HttpError,
-    ParseError,
+    HttpError(reqwest::Error),
+    ParseError(chrono::format::ParseError),
 }
 impl Display for MyCustomError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            MyCustomError::HttpError => write!(f, "HTTP Error..."),
-            MyCustomError::ParseError => write!(f, "Parse Error..."),
+            MyCustomError::HttpError(e) => write!(f, "HTTP Error...{}", e),
+            MyCustomError::ParseError(e) => write!(f, "Parse Error...{}", e),
         }
     }
 }
 impl Error for MyCustomError {}
 // 配合 ？操作符 实现内部异常转换为 定制异常。 可以不使用map_err来简化代码
 impl From<reqwest::Error> for MyCustomError {
-    fn from(_: reqwest::Error) -> Self {
-        MyCustomError::HttpError
+    fn from(e: reqwest::Error) -> Self {
+        MyCustomError::HttpError(e)
     }
 }
 impl From<chrono::format::ParseError> for MyCustomError {
-    fn from(_: chrono::format::ParseError) -> Self {
-        MyCustomError::ParseError
+    fn from(e: chrono::format::ParseError) -> Self {
+        MyCustomError::ParseError(e)
     }
 }
 
