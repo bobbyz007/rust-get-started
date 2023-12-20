@@ -24,7 +24,7 @@ pub fn cmp_order() {
     let result = 1.cmp(&2);
     assert_eq!(result, Ordering::Less);
 
-    let result = "abc".partial_cmp(&"Abc");
+    let result = "abc".partial_cmp("Abc");
     assert_eq!(result, Some(Ordering::Greater));
     let result = "abc".cmp(&"Abc");
     assert_eq!(result, Ordering::Greater);

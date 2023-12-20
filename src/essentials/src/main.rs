@@ -7,6 +7,7 @@ use crate::structs::structs;
 use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, manual_type_conversion};
 use utils::println_format_marker;
 use crate::collection::cmp_order;
+use crate::error::{err_handled_application, err_handled_library};
 
 mod structs;
 mod patterns;
@@ -16,6 +17,7 @@ mod closure;
 mod iterator;
 mod string;
 mod collection;
+mod error;
 
 fn main() {
     println_format_marker("structs");
@@ -54,4 +56,9 @@ fn main() {
 
     println_format_marker("collection");
     cmp_order();
+
+    println_format_marker("error");
+    err_handled_application();
+    err_handled_library();
+
 }
