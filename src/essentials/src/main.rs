@@ -2,8 +2,10 @@ use crate::closure::{closure_fn, closure_fnmut, closure_fnonce, closure_higher_r
 use crate::enums::enums;
 use crate::iterator::iterator_adapter;
 use crate::patterns::{pattern_builder, pattern_visitor, patterns};
+use crate::string::{str_code, str_string, str_to_other_type};
 use crate::structs::structs;
 use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, manual_type_conversion};
+use utils::println_format;
 
 mod structs;
 mod patterns;
@@ -11,27 +13,28 @@ mod type_conversion;
 mod enums;
 mod closure;
 mod iterator;
+mod string;
 
 fn main() {
-    println!("-----------------------------structs----------------------------------");
+    println_format("structs");
     structs();
 
-    println!("------------------------------enums-----------------------------------");
+    println_format("enums");
     enums();
 
-    println!("---------------------------match patterns-----------------------------");
+    println_format("match patterns");
     patterns();
     pattern_builder();
     pattern_visitor();
 
-    println!("---------------------------type conversion-----------------------------");
+    println_format("type conversion");
     implicit_type_conversion_string();
     // 以下都是显式类型转换
     manual_type_conversion();
     as_op();
     from_into();
 
-    println!("-------------------------------closure--------------------------------");
+    println_format("closure");
     closure_fn();
     closure_fnmut();
     closure_fnonce();
@@ -40,4 +43,10 @@ fn main() {
     closure_vector();
     closure_higher_ranked_lifetime();
     iterator_adapter(); // 自定义迭代器适配器
+
+    println_format("string");
+    str_code();
+    str_string();
+    str_to_other_type();
+
 }
