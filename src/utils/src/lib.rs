@@ -1,7 +1,7 @@
 // 格式化打印
 pub fn println_format_marker(s: &str) {
     // :^ 中间对齐， = 等号填充， .18 截取18个字符
-    println!("{}", format!("{:=^80.18}", format!(" {} ", s)));
+    println!("{:=^80.18}", format!(" {} ", s));
 }
 
 pub fn add(left: usize, right: usize) -> usize {

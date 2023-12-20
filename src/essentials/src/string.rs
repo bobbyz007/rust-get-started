@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::num::ParseIntError;
 use std::str;
 use std::str::FromStr;
@@ -58,5 +59,60 @@ impl FromStr for Point {
         let x = coords[0].parse::<i32>()?;
         let y = coords[1].parse::<i32>()?;
         Ok(Point { x, y })
+    }
+}
+
+// 所有这些格式化规则，对 println! 和 write! 宏同样适用
+pub fn str_other_type_to_str() {
+    // 字符串
+    let s = format!("{} Rust", "Hello");
+    assert_eq!(s, "Hello Rust");
+    assert_eq!(format!("{:5}", "HelloRust"), "HelloRust");
+    assert_eq!(format!("{:5.3}", "HelloRust"), "Hel  ");
+    assert_eq!(format!("{:10}", "HelloRust"), "HelloRust ");
+    assert_eq!(format!("{:<12}", "HelloRust"), "HelloRust   "); // 左对齐
+    assert_eq!(format!("{:>12}", "HelloRust"), "   HelloRust"); // 右对齐
+    assert_eq!(format!("{:^12.5}", "HelloRust"), "   Hello    "); // 截取5个字符
+    assert_eq!(format!("{:=^12.5}", "HelloRust"), "===Hello===="); // =填充
+
+    // 整数
+    assert_eq!(format!("{:+}", -1234), "-1234"); // + 表示正负符号
+    assert_eq!(format!("{:+}", 1234), "+1234");
+    assert_eq!(format!("{:#x}", 1234), "0x4d2"); // #x 十六进制
+    assert_eq!(format!("{:x}", 1234), "4d2"); // #x 十六进制
+    assert_eq!(format!("{:>#15x}", 1234), "          0x4d2"); // #x 右对齐
+    assert_eq!(format!("{:#b}", 1234), "0b10011010010"); // #b 二进制
+    assert_eq!(format!("{:b}", 1234), "10011010010"); // b 二进制
+    assert_eq!(format!("{:^20b}", 1234), "    10011010010     "); // 居中
+
+    // 浮点数
+    assert_eq!(format!("{:.4}", 1234.5678), "1234.5678");
+    assert_eq!(format!("{:.2}", 1234.5618), "1234.56");
+    assert_eq!(format!("{:.2}", 1234.5678), "1234.57");  // 截取时会四舍五入
+    assert_eq!(format!("{:<10.4}", 1234.5678), "1234.5678 ");
+    assert_eq!(format!("{:^10.2}", 1234.5678), " 1234.57  ");
+    assert_eq!(format!("{:0^12.2}", 1234.5678), "001234.57000"); // 0填充
+    assert_eq!(format!("{:e}", 1234.5678), "1.2345678e3");
+
+    // 自定义类型，实现Display trait
+    let city = City{
+        name: "Beijing",
+        lat: 39.90469,
+        lon: -116.40717
+    };
+    assert_eq!(format!("{}", city), "Beijing: 39.905N 116.407W");
+    println!("Format: {}", city);
+}
+
+struct City {
+    name: &'static str,
+    lat: f32,
+    lon: f32,
+}
+impl Display for City {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        let lat_c = if self.lat >= 0.0 { 'N' } else { 'S' };
+        let lon_c = if self.lon >= 0.0 { 'E' } else { 'W' };
+        write!(f, "{}: {:.3}{} {:.3}{}", self.name, self.lat.abs(), lat_c, self.lon.abs(), lon_c)
     }
 }
