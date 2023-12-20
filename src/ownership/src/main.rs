@@ -1,3 +1,4 @@
+use utils::println_format_marker;
 use crate::bind_scope::{brace_scope, closure_scope, func_scope, let_scope, loop_scope, match_scope};
 use crate::copy_semantic::{copy_semantic, copy_semantic_auto, copy_semantic_borrow, is_copy_semantic};
 use crate::lifetime::{lifetime_bound, lifetime_func, lifetime_omit_rules, lifetime_struct, lifetime_trait_object, lifetime_trait_object_explicit, return_str};
@@ -15,13 +16,13 @@ mod smart_pointer;
 mod nll;
 
 fn main() {
-    println!("-----------------------------copy semantic----------------------------------");
+    println_format_marker("copy semantic");
     copy_semantic();
     copy_semantic_auto();
     copy_semantic_borrow();
     is_copy_semantic();
 
-    println!("-------------------------------bind scope------------------------------------");
+    println_format_marker("bind scope");
     brace_scope();
     match_scope();
     loop_scope();
@@ -29,10 +30,10 @@ fn main() {
     func_scope();
     closure_scope();
 
-    println!("-------------------------------borrow----------------------------------------");
+    println_format_marker("borrow");
     borrow();
 
-    println!("-------------------------------lifetime---------------------------------------");
+    println_format_marker("lifetime");
     return_str();
     lifetime_func();
     lifetime_struct();
@@ -44,7 +45,7 @@ fn main() {
     lifetime_invariant();
     nll_borrow();
 
-    println!("-----------------------------smart pointer------------------------------------");
+    println_format_marker("smart pointer");
     sp_owner();
     sp_rc_weak();
     sp_cell_refcell();

@@ -8,6 +8,7 @@ pub fn nll_borrow() {
     data.push('d');
 }
 
+#[allow(unused_variables)]
 fn capitalized(data: &mut [char]) {
     // do something
 }

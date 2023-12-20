@@ -1,3 +1,4 @@
+use utils::println_format_marker;
 use crate::trait_as_abstract_type::{trait_abstract_types};
 use crate::trait_as_bound::{trait_bound};
 use crate::trait_as_interface::{trait_interface};
@@ -10,15 +11,15 @@ mod trait_as_abstract_type;
 mod trait_as_label;
 
 fn main() {
-    println!("-----------------------------trait interface----------------------------------");
+    println_format_marker("trait interface");
     trait_interface();
 
-    println!("-----------------------------trait bound--------------------------------------");
+    println_format_marker("trait bound");
     trait_bound();
 
-    println!("-----------------------------trait abstract types-----------------------------");
+    println_format_marker("abstract types");
     trait_abstract_types();
 
-    println!("-----------------------------trait label--------------------------------------");
+    println_format_marker("trait label");
     send_sync_safe();
 }
