@@ -12,7 +12,8 @@ members = [
     "ownership",
     "traits",
     "utils",
-    "csv_challenge"
+    "csv_challenge",
+    "concurrency",
 ]
 
 [dependencies]
