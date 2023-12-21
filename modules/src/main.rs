@@ -1,4 +1,4 @@
-// 使用mod关键字将info声明为子模块
+// 使用mod关键字将info声明为子模块， 单个文件就是一个默认的模块
 mod info;
 mod teacher;
 
