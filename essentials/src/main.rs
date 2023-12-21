@@ -8,6 +8,7 @@ use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, 
 use utils::println_format_marker;
 use crate::collection::cmp_order;
 use crate::error::{err_handled_application, err_handled_library};
+use crate::regex::{regex_group_name, regex_match};
 
 mod structs;
 mod patterns;
@@ -18,6 +19,7 @@ mod iterator;
 mod string;
 mod collection;
 mod error;
+mod regex;
 
 fn main() {
     println_format_marker("structs");
@@ -60,5 +62,9 @@ fn main() {
     println_format_marker("error");
     err_handled_application();
     err_handled_library();
+
+    println_format_marker("regex");
+    regex_match();
+    regex_group_name();
 
 }
