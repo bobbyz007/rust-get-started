@@ -92,3 +92,27 @@ impl B for S {
         println!("from B: {:?}", i)
     }
 }
+
+// 自动解引用 auto-dereference
+// 具体规则请参考 https://stackoverflow.com/questions/28519997/what-are-rusts-exact-auto-dereferencing-rules%E3%80%82
+pub fn auto_deref() {
+    (*X{val:42}).refm();     // i32::refm() , Self == @
+    X{val:42}.refm();        // X::refm()   , Self == @
+    (&X{val:42}).refm();     // X::refm()   , Self == *@
+    (&&X{val:42}).refm();    // &X::refm()  , Self == *@
+    (&&&X{val:42}).refm();   // &&X::refm() , Self == *@
+    (&&&&X{val:42}).refm();  // &&&X::refm(), Self == *@
+    (&&&&&X{val:42}).refm(); // &&&X::refm(), Self == **@
+}
+struct X { val: i32 }
+impl std::ops::Deref for X {
+    type Target = i32;
+    fn deref(&self) -> &i32 { &self.val }
+}
+trait RefM { fn refm(&self); }
+impl RefM for i32  { fn refm(&self) { println!("i32::refm()");  } }
+impl RefM for X    { fn refm(&self) { println!("X::refm()");    } }
+impl RefM for &X   { fn refm(&self) { println!("&X::refm()");   } }
+impl RefM for &&X  { fn refm(&self) { println!("&&X::refm()");  } }
+impl RefM for &&&X { fn refm(&self) { println!("&&&X::refm()"); } }
+

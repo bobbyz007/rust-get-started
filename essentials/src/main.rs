@@ -4,7 +4,7 @@ use crate::iterator::iterator_adapter;
 use crate::patterns::{pattern_builder, pattern_visitor, patterns};
 use crate::string::{str_code, str_other_type_to_str, str_string, str_to_other_type};
 use crate::structs::structs;
-use crate::type_conversion::{as_op, from_into, implicit_type_conversion_string, manual_type_conversion};
+use crate::type_conversion::{as_op, auto_deref, from_into, implicit_type_conversion_string, manual_type_conversion};
 use utils::println_format_marker;
 use crate::collection::cmp_order;
 use crate::error::{err_handled_application, err_handled_library};
@@ -39,6 +39,7 @@ fn main() {
     manual_type_conversion();
     as_op();
     from_into();
+    auto_deref();
 
     println_format_marker("closure");
     closure_fn();
