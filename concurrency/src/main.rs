@@ -1,11 +1,13 @@
 mod thread;
 mod lock;
 mod channel;
+mod utils;
 
-use utils::println_format_marker;
+use ::utils::println_format_marker;
 use crate::channel::{channel_async, channel_sync, channel_workload_sample};
 use crate::lock::{lock, lock_barrier, lock_condvar, lock_deadlock, lock_poisoning, lock_rwlock};
 use crate::thread::{thread_create, thread_create_builder, thread_local, thread_park, thread_send, thread_send_sync};
+use crate::utils::{rayon_join, rayon_on_off, rayon_par_iter};
 
 fn main() {
     println_format_marker("thread");
@@ -28,5 +30,10 @@ fn main() {
     channel_async();
     channel_sync();
     channel_workload_sample();
+
+    println_format_marker("rayon crate");
+    rayon_par_iter();
+    rayon_on_off(100_000_000);
+    rayon_join(42);
 
 }
