@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 utils = {version = "0.1.0", path = "../utils"}
+proc_macros = {version = "0.1.0", path = "./proc_macros"}
+

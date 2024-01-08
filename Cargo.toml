@@ -14,7 +14,8 @@ members = [
     "utils",
     "csv_challenge",
     "concurrency",
-    'macros'
+    'macros',
+    'macros/proc_macros'
 ]
 
 [dependencies]

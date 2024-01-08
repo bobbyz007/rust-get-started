@@ -41,3 +41,5 @@ pub fn meta_variable() {
     println!("{:?}", multiply_add!(1, 2, 3));
     println!("{:?}", vec_strs![1, "a", true, 3.14159f32]);
 }
+
+
