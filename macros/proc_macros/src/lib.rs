@@ -191,9 +191,3 @@ fn map_fields<F>(fields: &Fields, mapper:&mut F) -> TokenStream2
     let stream2 = TokenStream2::from_iter(fs);
     stream2
 }
-
-
-
-
-
-

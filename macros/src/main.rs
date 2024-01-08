@@ -14,5 +14,4 @@ fn main() {
     attribute_proc_macro();
     derive_proc_macro();
     derive_proc_macro_builder();
-
 }
