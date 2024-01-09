@@ -17,3 +17,6 @@ path = "src/examples/share_with_mutex.rs"
 [[example]]
 name = "client"
 path = "src/examples/client.rs"
+[[example]]
+name = "client2"
+path = "src/examples/hello_redis.rs"

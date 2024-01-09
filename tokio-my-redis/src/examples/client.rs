@@ -1,6 +1,6 @@
 use bytes::Bytes;
 use mini_redis::client;
-use tokio::sync::mpsc;
+use tokio::sync::{mpsc, oneshot};
 
 #[tokio::main]
 async fn main() {
@@ -12,12 +12,15 @@ async fn main() {
         let mut client = client::connect("127.0.0.1:6379").await.unwrap();
         while let Some(cmd) = rx.recv().await {
             match cmd {
-                Command::Get { key } => {
-                    let val = client.get(&key).await;
-                    println!("get val: {:?}", val);
+                Command::Get { key, resp } => {
+                    let res = client.get(&key).await;
+                    // Ignore errors
+                    let _ = resp.send(res);
                 }
-                Command::Set { key, val } => {
-                    let _ = client.set(&key, val).await;
+                Command::Set { key, val, resp } => {
+                    let res = client.set(&key, val).await;
+                    // Ignore errors
+                    let _ = resp.send(res);
                 }
             }
         }
@@ -29,20 +32,30 @@ async fn main() {
 
     // Spawn two tasks, one gets a key, the other sets a key
     let t1 = tokio::spawn(async move {
+        let (resp_tx, resp_rx) = oneshot::channel();
         let cmd = Command::Get {
             key: "foo".to_string(),
+            resp: resp_tx
         };
 
         tx.send(cmd).await.unwrap();
+        // Await the response
+        let res = resp_rx.await;
+        println!("GOT get = {:?}", res);
     });
 
     let t2 = tokio::spawn(async move {
+        let (resp_tx, resp_rx) = oneshot::channel();
         let cmd = Command::Set {
             key: "foo".to_string(),
             val: "bar".into(),
+            resp: resp_tx
         };
 
         tx2.send(cmd).await.unwrap();
+        // Await the response
+        let res = resp_rx.await;
+        println!("GOT set = {:?}", res);
     });
 
     t1.await.unwrap();
@@ -50,13 +63,17 @@ async fn main() {
     manager.await.unwrap();
 }
 
+type Responder<T> = oneshot::Sender<mini_redis::Result<T>>;
 #[derive(Debug)]
 enum Command {
     Get {
         key: String,
+        // 在manager task中返回response
+        resp: Responder<Option<Bytes>>
     },
     Set {
         key: String,
         val: Bytes,
+        resp: Responder<()>
     }
 }
