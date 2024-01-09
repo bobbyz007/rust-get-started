@@ -17,5 +17,8 @@ members = [
     'macros',
     'macros/proc_macros'
 ]
+exclude = [
+    "tokio-my-redis"
+]
 
 [dependencies]
