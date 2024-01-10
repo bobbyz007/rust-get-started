@@ -14,9 +14,11 @@ bytes = "1"
 [[example]]
 name = "server"
 path = "src/examples/share_with_mutex.rs"
+# "cargo run --example client"
 [[example]]
 name = "client"
 path = "src/examples/client.rs"
+# "cargo run --example client2"
 [[example]]
 name = "client2"
 path = "src/examples/hello_redis.rs"
