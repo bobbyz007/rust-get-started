@@ -15,7 +15,7 @@ futures = "0.3.30"
 # run *.rs other than main.rs: "cargo run --example server"
 [[example]]
 name = "server"
-path = "src/examples/share_with_mutex.rs"
+path = "src/examples/server_with_mutex.rs"
 # "cargo run --example client"
 [[example]]
 name = "client"
@@ -23,4 +23,4 @@ path = "src/examples/client.rs"
 # "cargo run --example client2"
 [[example]]
 name = "client2"
-path = "src/examples/hello_redis.rs"
+path = "src/examples/client_hello_redis.rs"
