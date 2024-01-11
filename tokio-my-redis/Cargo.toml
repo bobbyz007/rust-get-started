@@ -24,3 +24,13 @@ path = "src/examples/client.rs"
 [[example]]
 name = "client2"
 path = "src/examples/client_hello_redis.rs"
+[[example]]
+name = "select"
+path = "src/examples/select.rs"
+[[example]]
+name = "select_return"
+path = "src/examples/select_return.rs"
+
+[[example]]
+name = "select_loop"
+path = "src/examples/select_loop.rs"
