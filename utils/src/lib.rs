@@ -1,3 +1,6 @@
+// from https://github.com/rust-lang/book/blob/main/packages/trpl
+pub mod trpl;
+
 // 格式化打印
 pub fn println_format_marker(s: &str) {
     // :^ 中间对齐， = 等号填充， .18 截取18个字符
