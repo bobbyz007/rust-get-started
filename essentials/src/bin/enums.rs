@@ -1,4 +1,4 @@
-pub fn enums() {
+fn main() {
     let ip1 = IpAddr::V4(127, 1, 1, 1);
     let ip2 = IpAddr::V6("2001:0DB8:0000:0000:0008:0800:200C:417A".to_string());
     println!("ipv4: {:?}", ip1);

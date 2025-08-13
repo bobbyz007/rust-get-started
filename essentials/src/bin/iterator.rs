@@ -1,4 +1,5 @@
-pub fn iterator_adapter() {
+// 自定义迭代器适配器
+fn main() {
     let arr = [1, 2, 3, 4, 5, 6];
     let sum = arr.iter().step(2).fold(0, |acc, x| acc + x);
     println!("iterator sum: {:?}", sum);

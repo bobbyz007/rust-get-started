@@ -14,7 +14,7 @@ use std::cmp::Ordering;
 /// 3. HashMap中的key 必须实现 Eq，所以浮点数不能作为key。
 
 // 原生数字类型和字符串已实现上述trait
-pub fn cmp_order() {
+fn main() {
     // 浮点数只能partial_cmp
     let result = 1.0.partial_cmp(&2.0);
     assert_eq!(result, Some(Ordering::Less));

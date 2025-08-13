@@ -3,6 +3,13 @@ use std::num::ParseIntError;
 use std::str;
 use std::str::FromStr;
 
+fn main() {
+    str_code();
+    str_string();
+    str_to_other_type();
+    str_other_type_to_str();
+}
+
 pub fn str_code() {
     let tao = str::from_utf8(&[0xE9, 0x81, 0x93]).unwrap();
     assert_eq!("道", tao);

@@ -1,4 +1,13 @@
 use std::fmt::Debug;
+fn main() {
+    closure_fn();
+    closure_fnmut();
+    closure_fnonce();
+    closure_move();
+    let _ = closure_return(1);
+    closure_vector();
+    closure_higher_ranked_lifetime();
+}
 
 /// 本质： 是一个语法糖，闭包表达式会由编译器自动翻译为结构体实例，并为其实现Fn，FnMut，FnOnce三个trait中的一个。
 /// 继承关系： Fn（复制语义环境变量，不可变借用捕获）: FnMut（可变绑定修改环境变量，可变借用捕获）: FnOnce（移动语义环境变量，转移所有权来捕获）

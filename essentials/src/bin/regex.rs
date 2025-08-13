@@ -1,5 +1,10 @@
 use regex::Regex;
 
+fn main() {
+    regex_match();
+    regex_group_name();
+}
+
 //  正则表达式匹配
 pub fn regex_match() {
     // r: raw string

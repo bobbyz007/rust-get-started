@@ -1,7 +1,15 @@
 use std::rc::Rc;
+fn main() {
+    implicit_type_conversion_string();
+    // 以下都是显式类型转换
+    manual_type_conversion();
+    as_op();
+    from_into();
+    auto_deref();
+}
 
 //隐式类型转换 implicit type conversion，由编译器或解释器自动来完成，用来简化编程
-pub fn implicit_type_conversion_string() {
+fn implicit_type_conversion_string() {
     let a = "hello".to_string();
     let b = " world".to_string();
 

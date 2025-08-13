@@ -1,9 +1,13 @@
 // 高效处理 Option<T>，包括其unwrap， map， and_then方法
-
 use std::collections::HashMap;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 use chrono::{NaiveDate};
+
+fn main() {
+    err_handled_application();
+    err_handled_library();
+}
 
 pub fn err_handled_application() {
     match get_current_date_multiple_error() {

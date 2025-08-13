@@ -1,8 +1,14 @@
 use std::any::Any;
 use std::f64::consts::PI;
 
+fn main() {
+    patterns();
+    pattern_builder();
+    pattern_visitor();
+}
+
 #[allow(unused_variables)]
-pub fn patterns() {
+fn patterns() {
     let a = 2;
     match a {
         1 | 2 => println!("1 or 2 matched"),
@@ -111,7 +117,7 @@ struct Point {
 }
 
 // builder pattern in rust
-pub fn pattern_builder() {
+fn pattern_builder() {
     let c = Circle::new().x(1.0).y(2.0).radius(2.0).build();
     println!("pattern builder area: {:?}", c.area());
 }
@@ -158,7 +164,7 @@ impl CircleBuilder {
 }
 
 // visitor pattern in rust
-pub fn pattern_visitor() {
+fn pattern_visitor() {
     let house = House::new();
     // simply print out the house elements
     house.accept(&HouseElementListVisitor::new());
