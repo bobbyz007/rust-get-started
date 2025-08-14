@@ -19,7 +19,7 @@ use crossbeam::channel;
 // Main entry point. A mini-tokio instance is created and a few tasks are
 // spawned. Our mini-tokio implementation only supports spawning tasks and
 // setting delays.
-pub fn mini_tokio() {
+fn main() {
     // Create the mini-tokio instance.
     let mini_tokio = MiniTokio::new();
 

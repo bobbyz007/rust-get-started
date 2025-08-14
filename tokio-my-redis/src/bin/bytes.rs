@@ -2,9 +2,15 @@ use std::io;
 use std::io::{Cursor, Seek, SeekFrom, Write};
 use bytes::{BufMut, Bytes, BytesMut};
 
+fn main() {
+    bytes();
+    bytes_bufmut();
+    cursor();
+}
+
 // BytesMut实现了Buf，BufMut特征
 // Bytes实现了Buf 特征
-pub fn bytes() {
+fn bytes() {
     let mut buf = BytesMut::with_capacity(1024);
     buf.put(&b"hello world"[..]);
 
@@ -18,7 +24,7 @@ pub fn bytes() {
 }
 
 // &mut [u8], Vec<u8> 实现了BufMut
-pub fn bytes_bufmut() {
+fn bytes_bufmut() {
     let mut buf = vec![];
 
     buf.put_u8(b'h');
@@ -30,7 +36,7 @@ pub fn bytes_bufmut() {
 
 // io::cursor 为 AsRef<[u8]> 实现了Seek，Read，BufRead特征
 // 为 &mut [u8]等实现了Write特征
-pub fn cursor() {
+fn cursor() {
     let mut buff = Cursor::new(vec![0; 15]);
 
     // 针对 &mut [u8] 可以定位写
