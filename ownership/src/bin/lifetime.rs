@@ -4,7 +4,7 @@ use std::fmt::Debug;
 ///
 /// 1. 函数签名的生命周期参数限制条件： 输出（借用方）的生命周期长度 不能超过 输入（出借方）的生命周期长度。
 /// 2. 禁止在没有任何输入参数的情况下 返回引用， 明显造成悬垂引用， 以下函数报错。 但可以返回String
-/*pub fn return_str<'a>() -> &'a str {
+/*fn return_str<'a>() -> &'a str {
     let mut s = "rust".to_string();
     for i in 0..3 {
         s.push_str(" good");
@@ -16,9 +16,18 @@ use std::fmt::Debug;
     let result = String::from("really long string");
     return &result;
 }*/
+fn main () {
+    return_str();
+    lifetime_func();
+    lifetime_struct();
+    lifetime_omit_rules();
+    lifetime_bound();
+    lifetime_trait_object();
+    lifetime_trait_object_explicit(&[2, 3]);
+}
 
 #[allow(unused_variables)]
-pub fn return_str() -> String {
+fn return_str() -> String {
     let mut s = "rust".to_string();
     for i in 0..3 {
         s.push_str(" good");
@@ -26,7 +35,7 @@ pub fn return_str() -> String {
     s
 }
 
-pub fn lifetime_func() {
+fn lifetime_func() {
     let s1 = String::from("rust");
     let s1_r = &s1;
     {
@@ -54,7 +63,7 @@ fn longest_mul<'a, 'b: 'a>(s1: &'a str, s2: &'b str) -> &'a str {
 struct Foo<'a> {
     part: &'a str,
 }
-pub fn lifetime_struct() {
+fn lifetime_struct() {
     let words = String::from("sometimes think, others");
     let first = words.split(",").next().expect("could not find a ,");
     // first  生命周期更长， f会先被析构
@@ -68,7 +77,7 @@ pub fn lifetime_struct() {
 /// 1. 每个输入位置上省略的生命周期都将成为一个不同的生命周期参数
 /// 2. 如果只有一个输入生命周期的位置，则该生命周期将分配给输出生命周期
 /// 3. 如果有多个输入生命周期的位置，且其中包含这&self，&mut self，则self的生命周期将分配给输出生命周期
-pub fn lifetime_omit_rules(){
+fn lifetime_omit_rules(){
     let foo = Foo::new("sometimes think, others");
     let foo2 = Foo::new2("sometimes think, others");
 
@@ -109,7 +118,7 @@ fn f<'a, 'b>(x: &'a i32, y: &'b mut i32) where 'a: 'b {
     let r: &'b &'a i32 = &&0;   // &'b &'a i32 is well formed because 'a: 'b
 }
 
-pub fn lifetime_bound() {
+fn lifetime_bound() {
     let mut b =10;
     f(&20, &mut b);
     println!("b: {:?}", b);
@@ -148,7 +157,7 @@ struct Bar<'a> {
 }
 impl<'a> T1 for Bar<'a> {}
 #[allow(unused_variables)]
-pub fn lifetime_trait_object() {
+fn lifetime_trait_object() {
     let num = 5;
     let bar = Box::new(Bar { x: &num });
     // 可以自动推导trait对象的生命周期就是'a，因为实现类型中有只有唯一的生命周期'a
@@ -156,7 +165,7 @@ pub fn lifetime_trait_object() {
 }
 
 // 生命周期也是类型的一部分
-pub trait T2 {}
+trait T2 {}
 #[allow(dead_code)]
 struct S2<'a> {
     s: &'a [u32],
@@ -164,7 +173,7 @@ struct S2<'a> {
 impl<'a> T2 for S2<'a> {
 }
 // trait对象默认的生命周期是'static, 此时显式指定trait对象的声明周期是'a, 不然导致 'a outlives 'static
-pub fn lifetime_trait_object_explicit<'a>(s: &'a [u32]) -> Box<dyn T2 + 'a> {
+fn lifetime_trait_object_explicit<'a>(s: &'a [u32]) -> Box<dyn T2 + 'a> {
     Box::new(S2 { s })
 }
 

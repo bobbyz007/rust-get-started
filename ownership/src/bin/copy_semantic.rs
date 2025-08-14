@@ -10,8 +10,15 @@
 /// 2. 不可变引用类型，比如 &String， *const String， *mut String。 比如 &mut i32没有实现
 /// 3. 切片类型，比如 &str， &[i32],
 
+fn main() {
+    copy_semantic();
+    copy_semantic_auto();
+    copy_semantic_borrow();
+    is_copy_semantic();
+}
+
 #[allow(dead_code, unused_variables)]
-pub fn copy_semantic() {
+fn copy_semantic() {
     let a = A { a: 1, b: 2 };
     let b = a;
     // 如果A不添加Copy语义， 会报错
@@ -19,7 +26,7 @@ pub fn copy_semantic() {
 }
 
 #[allow(unused_variables)]
-pub fn copy_semantic_auto() {
+fn copy_semantic_auto() {
     let a = ("a".to_string(), "b".to_string());
     let b = a;
     // 报错：a没有实现copy， 因为其元素没有实现copy
@@ -32,7 +39,7 @@ pub fn copy_semantic_auto() {
 }
 
 #[allow(unused_variables, dead_code)]
-pub fn copy_semantic_borrow() {
+fn copy_semantic_borrow() {
     let a = "hello".to_string();
     let b = & a;
     // error:因为b是借用，本来就不拥有变量a的所有权，不能将其借用的数据解引用转移所有权到另一个变量中去，如果允许，&a就无效了，a就成为了野指针
@@ -48,8 +55,8 @@ pub fn copy_semantic_borrow() {
     println!("b: {:?}", a)
 }
 
-pub fn is_copy<T: Copy>() {}
-pub fn is_copy_semantic() {
+fn is_copy<T: Copy>() {}
+fn is_copy_semantic() {
     // 基本类型
     is_copy::<bool>();
     is_copy::<char>();

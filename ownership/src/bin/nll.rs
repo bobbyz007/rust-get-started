@@ -1,5 +1,5 @@
 /// NLL: Non Lexical Lifetime 基于非词法作用域生命周期的 借用检查
-pub fn nll_borrow() {
+fn main() {
     let mut data = vec!['a', 'b', 'c'];
     let slice = &mut data[..];
     capitalized(slice);

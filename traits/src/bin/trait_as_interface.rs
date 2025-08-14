@@ -1,7 +1,7 @@
 use std::ops::Add;
 
 // trait作为接口
-pub fn trait_interface() {
+fn main() {
     println!("struct add: {:?}", Point { x: 1, y: 0 } + Point { x: 2, y: 3 });
 
     // trait inheritance

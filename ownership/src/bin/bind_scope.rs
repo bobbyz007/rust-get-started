@@ -5,8 +5,17 @@
 /// 3. match匹配
 /// 4. 流程控制、函数或闭包等用到花括号的地方
 
+fn main() {
+    brace_scope();
+    match_scope();
+    loop_scope();
+    let_scope();
+    func_scope();
+    closure_scope();
+}
+
 #[allow(unused_variables, dead_code, path_statements)]
-pub fn brace_scope() {
+fn brace_scope() {
     let outer_val = 1;
     let outer_sp = "hello".to_string();
     {
@@ -20,7 +29,7 @@ pub fn brace_scope() {
 }
 
 #[allow(dead_code)]
-pub fn match_scope() {
+fn match_scope() {
     let a = Some("hello".to_string());
     match a {
         Some(s) => println!("{:?}", s),
@@ -31,7 +40,7 @@ pub fn match_scope() {
 }
 
 #[allow(dead_code)]
-pub fn loop_scope() {
+fn loop_scope() {
     let v = vec![1, 2, 3];
     // for, loop, while都是新的作用域，v是移动语义， 进入循环就会转移所有权
     for i in v {
@@ -41,7 +50,7 @@ pub fn loop_scope() {
 }
 
 #[allow(dead_code)]
-pub fn let_scope() {
+fn let_scope() {
     let a = Some("hello".to_string());
     if let Some(s) = a {
         println!("s: {:?}", s);
@@ -61,7 +70,7 @@ pub fn let_scope() {
     }
 }
 
-pub fn func_scope() {
+fn func_scope() {
     let s = "hello".to_string();
     foo(s);
     // println!("s: {:?}", s); // error， s是移动语义，转移到函数参数中
@@ -72,7 +81,7 @@ fn foo(s: String) -> String {
     s + &w
 }
 
-pub fn closure_scope() {
+fn closure_scope() {
     let s = "hello".to_string();
     // 新的作用域， s是移动语义， 转移到闭包中
     let join = |i: &str| {

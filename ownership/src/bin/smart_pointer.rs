@@ -2,9 +2,16 @@ use std::borrow::Cow;
 use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
+fn main() {
+    sp_owner();
+    sp_rc_weak();
+    sp_cell_refcell();
+    sp_cow();
+}
+
 /// 智能指针与普通引用的区别之一就是所有权的不同， 智能指针拥有资源的所有权，而普通引用只是对所有权的借用。
 #[allow(dead_code, unused_variables)]
-pub fn sp_owner() {
+fn sp_owner() {
     let x = Box::new("hello");
     let y = x;
     // ERR, x moved
@@ -25,7 +32,7 @@ pub fn sp_owner() {
 
 /// Rc<T> 主要用于共享堆上分配的数据 可以供程序的多个部分读取， 是单线程引用计数指针，不是线程安全类型，不允许共享给别的线程。
 #[allow(unused_variables, dead_code)]
-pub fn sp_rc_weak() {
+fn sp_rc_weak() {
     let x = Rc::new(45);
     let y1 = x.clone();  // 强引用计数，非深复制，只是共享所有权的计数
     let y2 = x.clone();
@@ -43,7 +50,7 @@ pub fn sp_rc_weak() {
 ///           避免包裹大的结构体，因为get会执行一次按位复制。
 ///           无运行时开销。
 /// RefCell<T>: 适用范围更广，对类型T没有copy实现的限制。 但有运行时开销，其内部维护着运行时借用检查器，比如如果持有多个可变借用则panic
-pub fn sp_cell_refcell() {
+fn sp_cell_refcell() {
     let foo = Foo {
         x: 1,
         y: Cell::new(3),
@@ -67,7 +74,7 @@ struct Foo {
 
 /// 写时复制： copy on write
 /// Cow<T>: 可能是Borrowed 或 Owned（本身拥有所有权，无需克隆） 类型
-pub fn sp_cow() {
+fn sp_cow() {
     // 没有可变需求，不会克隆
     let s1 = [1, 2, 3];
     let mut i1 = Cow::from(&s1[..]);

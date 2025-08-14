@@ -1,6 +1,12 @@
 // 参考： Why could this work about lifetime?
 // https://users.rust-lang.org/t/why-could-this-work-about-lifetime/104015
-pub fn lifetime_covariant() {
+
+fn main() {
+    lifetime_covariant(); // subtype and variance
+    lifetime_invariant();
+}
+
+fn lifetime_covariant() {
     let t0 = 3;
     let t = &t0;
     {
@@ -15,7 +21,7 @@ pub fn lifetime_covariant() {
 }
 
 #[allow(unused_variables, unused_mut, dead_code)]
-pub fn lifetime_invariant() {
+fn lifetime_invariant() {
     let t0 = 3;
     let mut t = &t0;
     {

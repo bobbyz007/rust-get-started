@@ -2,8 +2,15 @@
 
 use proc_macros::{Builder, define_struct_by_name, HelloMacroName, log_func_info, make_function};
 
+fn main() {
+    function_like_proc_macro();
+    attribute_proc_macro();
+    derive_proc_macro();
+    derive_proc_macro_builder();
+}
+
 // function proc macro
-pub fn function_like_proc_macro() {
+fn function_like_proc_macro() {
     // 定义struct
     define_struct_by_name!(TestStruct);
     let s = TestStruct {data: 13};
@@ -18,7 +25,7 @@ pub fn function_like_proc_macro() {
 }
 
 // attr proc macro
-pub fn attribute_proc_macro() {
+fn attribute_proc_macro() {
     my_function();
     println!();
 }
@@ -28,13 +35,13 @@ fn my_function() {
 }
 
 // derive proc macro
-pub fn derive_proc_macro() {
+fn derive_proc_macro() {
     Pancakes::hello_macro();
     println!();
 }
 
 // derive procedural macro
-pub trait HelloMacro {
+trait HelloMacro {
     fn hello_macro();
 }
 
@@ -45,7 +52,7 @@ struct Pancakes {
 }
 
 // derive proc macro：生成builder
-pub fn derive_proc_macro_builder() {
+fn derive_proc_macro_builder() {
     let com = Command::builder()
         .executable(Some("123".to_string()))
         .args(vec![1,2,3])
@@ -54,8 +61,8 @@ pub fn derive_proc_macro_builder() {
     println!("command: {:?}", com);
 }
 #[derive(Builder, Debug)]
-pub struct Command{
-    pub executable: Option<String>,
-    pub args: Vec<i32>,
-    pub current_dir: String,
+struct Command{
+    executable: Option<String>,
+    args: Vec<i32>,
+    current_dir: String,
 }

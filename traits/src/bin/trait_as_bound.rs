@@ -10,7 +10,7 @@ fn sum2<T>(a: T, b: T) -> T
     a + b
 }
 
-pub fn trait_bound() {
+fn main() {
     // trait bound
     assert_eq!(sum(1, 2), 3);
     assert_eq!(sum(1i32, 2i32), 3);

@@ -1,6 +1,6 @@
 use std::fmt::Debug;
 
-pub fn trait_abstract_types() {
+fn main() {
     // trait object
     let foo = Foo;
     static_dispatch(&foo);

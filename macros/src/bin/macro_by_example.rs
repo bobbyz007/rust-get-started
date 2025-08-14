@@ -35,8 +35,7 @@ macro_rules! vec_strs {
     };
 }
 
-
-pub fn meta_variable() {
+fn main() {
     println!("{:?}", times_five!(10));
     println!("{:?}", multiply_add!(1, 2, 3));
     println!("{:?}", vec_strs![1, "a", true, 3.14159f32]);
