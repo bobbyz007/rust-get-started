@@ -1,5 +1,13 @@
 use std::mem;
 
+pub mod pointer;
+pub mod reference_cycle;
+
+fn main() {
+    mem_size();
+    mem_size_composite();
+}
+
 #[allow(dead_code)]
 struct S {
     a: u8,
@@ -7,12 +15,12 @@ struct S {
     c: u16
 }
 
-pub fn mem_size() {
+fn mem_size() {
     // 实际7个字节，但对齐需要要占用8个字节， 而且结构体字段在内存布局可能需要重排序
     println!("mem size: {:?}", mem::size_of::<S>())
 }
 
-pub fn mem_size_composite() {
+fn mem_size_composite() {
     println!();
     println!("Box<u64>: {:>}", mem::size_of::<Box<u64>>());
     println!("A: {:>}", mem::size_of::<A>());

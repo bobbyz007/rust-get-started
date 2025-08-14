@@ -1,3 +1,9 @@
+fn main() {
+    smart_pointer();
+    smart_pointer_shadowing();
+    smart_pointer_destruct();
+}
+
 /// 像Box<T>这样的指针被称为智能指针，可以让Rust利用栈来隐式自动释放堆内存，从而避免显式调用free之类的函数去释放内存。
 /// 三类指针：
 /// 普通指针（引用）： 用&， &mut操作符创建
@@ -11,7 +17,7 @@
 
 // 确定性析构，实现Drop trait，当变量离开作用域时，会调用drop方法自动释放内存
 // 专业术语叫 RAII(Resource Acquisition Is Initialization) 或 SBRM(Scope-Bound Resource Management)
-pub fn smart_pointer() {
+fn smart_pointer() {
     let x = S(1);
     println!("create x: {:?}", x);
     {
@@ -22,7 +28,7 @@ pub fn smart_pointer() {
     println!("exit main");
 }
 
-pub fn smart_pointer_shadowing() {
+fn smart_pointer_shadowing() {
     println!();
 
     let x = S(1);
@@ -33,7 +39,7 @@ pub fn smart_pointer_shadowing() {
 }
 
 #[allow(unused_mut)]
-pub fn smart_pointer_destruct() {
+fn smart_pointer_destruct() {
     println!();
 
     // 主动析构

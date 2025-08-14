@@ -1,23 +1,8 @@
 use std::cell::RefCell;
 use std::rc::Rc;
-use crate::reference_cycle::List::{Cons, Nil};
+use List::{Cons, Nil};
 
-#[derive(Debug)]
-enum List {
-    Cons(i32, RefCell<Rc<List>>),
-    Nil,
-}
-
-impl List {
-    fn tail(&self) -> Option<&RefCell<Rc<List>>> {
-        match self {
-            Cons(_, item) => Some(item),
-            Nil => None,
-        }
-    }
-}
-
-pub fn reference_cycle_test() {
+fn main() {
     let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));
 
     println!("a initial rc count = {}", Rc::strong_count(&a));
@@ -39,6 +24,21 @@ pub fn reference_cycle_test() {
     // Uncomment the next line to see that we have a cycle;
     // it will overflow the stack.
     // println!("a next item = {:?}", a.tail());
+}
+
+#[derive(Debug)]
+enum List {
+    Cons(i32, RefCell<Rc<List>>),
+    Nil,
+}
+
+impl List {
+    fn tail(&self) -> Option<&RefCell<Rc<List>>> {
+        match self {
+            Cons(_, item) => Some(item),
+            Nil => None,
+        }
+    }
 }
 
 
